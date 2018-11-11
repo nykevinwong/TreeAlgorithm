@@ -121,20 +121,42 @@ namespace Algorithm
             {
                 if(root!=null)
                 {
-                    s.Push(root);
+                     s.Push(root);
                     postorder.Push(root.value);
-                    root = root.left;
+                    root = root.right; // swap to right
                 }
                 else // root is null
                 {
                     root = s.Pop();
-                    root = root.right;
+                    root = root.left; // swap to left
                 }
             }
 
             while(postorder.Count > 0) Console.Write(postorder.Pop()+ " ");
 
             Console.WriteLine();
+        }
+
+        public void LevelorderTraversalIterative(Node root, IList<IList<int>> ls)
+        {
+            Queue<Node> q = new Queue<Node>();
+            if(root!=null) q.Enqueue(root);
+            int level = 0;
+
+            while(q.Count > 0)
+            {
+                int size = q.Count;
+                ls.Add(new List<int>());
+                for(int i=0;i<size;i++)
+                {
+                    Node node = q.Dequeue();                    
+                    ls[level].Add(node.value);
+
+                    if(node.left!=null) q.Enqueue(node.left);
+                    if(node.right!=null) q.Enqueue(node.right);
+                }
+                level++;
+            }
         }
 
         public void Print() { Print(root); }
@@ -192,6 +214,9 @@ namespace Algorithm
             tree.PreorderTraversalIterative(tree.root);
             tree.InorderTraversalIterative(tree.root);
             tree.PostorderTraversalIterative(tree.root);
+            IList<IList<int>> l5 = new List<IList<int>>();            
+            tree.LevelorderTraversalIterative(tree.root, l5);
+            PrintList("Levelorder Traversal Iterative", l5);
 
         }
     }
