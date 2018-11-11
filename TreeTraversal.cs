@@ -159,6 +159,31 @@ namespace Algorithm
             }
         }
 
+        // 700. Search in a Binary Searcsh Tree
+        public Node SearchBST(Node root, int value) {
+            if(root==null) return null;
+        
+            if(root.value > value) return SearchBST(root.left, value);
+            else if(root.value < value) return SearchBST(root.right, value);
+        
+            return root; // found this node
+        }
+
+        //617. Merge Two Binary Trees
+        public Node MergeTrees(Node t1, Node t2) {
+            if(t1==null && t2 == null ) return null;
+            
+            Node node = new Node(0);
+            
+            if(t1!=null) node.value = t1.value;
+            if(t2!=null) node.value += t2.value;
+            
+            node.left = MergeTrees((t1!=null) ? t1.left:null,(t2!=null) ? t2.left:null);
+            node.right = MergeTrees((t1!=null) ? t1.right:null,(t2!=null) ? t2.right:null);
+            return node;
+        }
+
+
         public void Print() { Print(root); }
 
         private void Print(Node root)
