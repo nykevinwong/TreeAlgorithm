@@ -161,11 +161,12 @@ namespace Algorithm
 
         // 700. Search in a Binary Searcsh Tree
         public Node SearchBST(Node root, int value) {
-            if(root==null) return null;
+            if(root==null) { Console.WriteLine("SearchBST: "+ value + " not found!!"); return null; }
         
             if(root.value > value) return SearchBST(root.left, value);
             else if(root.value < value) return SearchBST(root.right, value);
         
+            Console.WriteLine("SearchBST: found " + value);
             return root; // found this node
         }
 
@@ -183,6 +184,36 @@ namespace Algorithm
             return node;
         }
 
+        public bool IsSymmetric(Node root) {
+            if(root==null)  // no node
+                return true;
+                    
+            if(root!=null && root.left==null && root.right== null)
+                return true; // only one node.
+            
+            return IsMirror(root.left, root.right);
+        }
+        
+        public bool IsMirror(Node left, Node right)
+        {
+            if(left!=null && right != null)
+            {
+                return IsMirror(left.left, right.right) && IsMirror(left.right, right.left) && (left.value==right.value);
+            }
+            else if(left==right && left==null)
+            {
+                return true; // both are null
+            }
+            
+            return false;
+        }
+
+// 104. Maximum Depth of Binary Tree
+        public int MaxDepth(Node root) {
+            if(root==null) return 0;        
+            if(root.left==null && root.right==null) return 1;        
+            return Math.Max( MaxDepth(root.left), MaxDepth(root.right)) + 1;
+        }
 
         public void Print() { Print(root); }
 
@@ -219,8 +250,7 @@ namespace Algorithm
 
         static void Main(string[] argv)
         {
-            int[] nums = {1,2,3,4,5,6,7,8,9};
-            Tree tree = new Tree(nums);
+            Tree tree = new Tree( new int[] {1,2,3,4,5,6,7,8,9});
             tree.Print();
             
             IList<int> l1 = new List<int>();            
@@ -242,6 +272,13 @@ namespace Algorithm
             IList<IList<int>> l5 = new List<IList<int>>();            
             tree.LevelorderTraversalIterative(tree.root, l5);
             PrintList("Levelorder Traversal Iterative", l5);
+            Console.WriteLine("Max Depth: " + tree.MaxDepth(tree.root));
+            tree.SearchBST(tree.root, 7);
+            Console.WriteLine("Is tree1 symmetric? " + tree.IsSymmetric(tree.root));
+
+            Tree tree2 = new Tree( new int[] {1,2,2,3,4,4,3});
+            tree2.Print();
+            Console.WriteLine("Is tree2 symmetric? " + tree2.IsSymmetric(tree2.root));
 
         }
     }
