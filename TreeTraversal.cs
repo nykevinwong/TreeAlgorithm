@@ -215,6 +215,81 @@ namespace Algorithm
             return Math.Max( MaxDepth(root.left), MaxDepth(root.right)) + 1;
         }
 
+        // solution 1a
+        public int KthSmallestInorderCompare(Node root, int k) {
+        int value = -1;
+        InorderCompare(root, ref k, ref value);
+        return value;
+        }
+        
+        public void InorderCompare(Node root, ref int k, ref int value)
+        {
+            if(root==null) return;
+            
+            InorderCompare(root.left, ref k, ref value);
+            
+            if(--k==0)
+            {
+                value = root.value;
+                return;
+            }
+            InorderCompare(root.right, ref k, ref value);
+            
+        }
+        
+        // solution 1b
+        public int KthSmallestInorderReturn(Node root, int k) 
+        {  return KthSmallestInorderReturn(root, ref k); }
+        
+        public int KthSmallestInorderReturn(Node root, ref int k)
+        {
+            if(root==null) return -1;
+            
+            int value = KthSmallestInorderReturn(root.left, ref k);
+            
+            if(k==0) return value;        
+            if(--k==0) return root.value;
+            
+            return KthSmallestInorderReturn(root.right, ref k);        
+        }
+        
+        // solution 2 - iterative inorder traversal
+        
+        public int KthSmallestInorderIterative(Node root, int k) 
+        {
+            Stack<Node> s = new Stack<Node>();
+            Node node = root;
+            
+            while(node != null || s.Count > 0)
+            {
+                for(;node!=null;node=node.left) s.Push(node);
+                
+                node = s.Pop();
+                if(--k==0) return node.value;
+                
+                node= node.right;
+            }
+            
+            return -1;
+        }
+        
+        // solution 3 - divide and conquer for valid BST & valid k only  
+        public int KthSmallestDivideConquer(Node root, int k) {
+            int count = CountNodes(root.left);
+            if (k <= count) 
+                return KthSmallestDivideConquer(root.left, k);
+            else if (k > count + 1) 
+                return KthSmallestDivideConquer(root.right, k-1-count); // 1 is counted as current node        
+            
+            return root.value;
+        }
+        
+        public int CountNodes(Node node) {
+            if (node == null) return 0;
+            
+            return 1 + CountNodes(node.left) + CountNodes(node.right);
+        }
+
         public void Print() { Print(root); }
 
         private void Print(Node root)
@@ -275,11 +350,17 @@ namespace Algorithm
             Console.WriteLine("Max Depth: " + tree.MaxDepth(tree.root));
             tree.SearchBST(tree.root, 7);
             Console.WriteLine("Is tree1 symmetric? " + tree.IsSymmetric(tree.root));
+            Console.WriteLine("Node Count(s): " + tree.CountNodes(tree.root));
+            Console.WriteLine("Kth Smallest Algorithm: ");
+            Console.WriteLine("InorderDivideConquer 5th smallest = " + tree.KthSmallestDivideConquer(tree.root, 5));
+            Console.WriteLine("InorderCompare 4th smallest = " + tree.KthSmallestInorderCompare(tree.root, 4));
+            Console.WriteLine("InorderReturn 3rd smallest = " + tree.KthSmallestInorderReturn(tree.root, 3)); 
+            Console.WriteLine("InorderIterative 2nd smallest = " + tree.KthSmallestInorderIterative(tree.root, 2));
 
             Tree tree2 = new Tree( new int[] {1,2,2,3,4,4,3});
-            tree2.Print();
+            tree2.Print();            
             Console.WriteLine("Is tree2 symmetric? " + tree2.IsSymmetric(tree2.root));
-
+            Console.WriteLine("Node Count(s): " + tree2.CountNodes(tree2.root));
         }
     }
 }
