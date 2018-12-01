@@ -17,8 +17,14 @@ namespace Algorithm
     public class Tree
     {
         public Node root;
+        public string name;
         public Tree()
         {
+            
+        }
+        public Tree(string name)
+        {
+            this.name = name;
         }
 
         public Node CreateBTFromSortedArray(int[] nums, int start=0)
@@ -354,7 +360,7 @@ namespace Algorithm
 
         static void Main(string[] argv)
         {
-            Tree tree = new Tree();
+            Tree tree = new Tree("tree");
             tree.root = tree.CreateBTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
             tree.Print();
             
@@ -379,12 +385,12 @@ namespace Algorithm
             PrintList("Levelorder Traversal Iterative", l5);
             Console.WriteLine("Max Depth: " + tree.MaxDepth(tree.root));
 
-            Tree tree2 = new Tree();
+            Tree tree2 = new Tree("tree2");
             tree2.root = tree2.CreateBSTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
             tree2.Print();
 
             tree2.SearchBST(tree2.root, 7);
-            Console.WriteLine("Is tree1 symmetric? " + tree2.IsSymmetric(tree2.root));
+            Console.WriteLine("Is {0} symmetric? {1}", tree2.name,  tree2.IsSymmetric(tree2.root));
             Console.WriteLine("Node Count(s): " + tree2.CountNodes(tree2.root));
             Console.WriteLine("Kth Smallest Algorithm: ");
             Console.WriteLine("InorderDivideConquer 5th smallest = " + tree2.KthSmallestDivideConquer(tree2.root, 5));
@@ -392,10 +398,10 @@ namespace Algorithm
             Console.WriteLine("InorderReturn 3rd smallest = " + tree2.KthSmallestInorderReturn(tree2.root, 3)); 
             Console.WriteLine("InorderIterative 2nd smallest = " + tree2.KthSmallestInorderIterative(tree2.root, 2));
 
-            Tree tree3 = new Tree();
+            Tree tree3 = new Tree("tree3");
             tree3.root = tree3.CreateBTFromSortedArray(new int[] {1,2,2,3,4,4,3});
             tree3.Print();            
-            Console.WriteLine("Is tree2 symmetric? " + tree3.IsSymmetric(tree3.root));
+            Console.WriteLine("Is {0} symmetric? {1} ", tree3.name,  tree3.IsSymmetric(tree3.root));
             Console.WriteLine("Node Count(s): " + tree3.CountNodes(tree3.root));
         }
     }
