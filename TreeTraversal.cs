@@ -27,7 +27,7 @@ namespace Algorithm
             this.name = name;
         }
 
-        public Node CreateBTFromSortedArray(int[] nums, int start=0)
+        public static Node CreateBTFromSortedArray(int[] nums, int start=0)
         {
             int left = start*2+1;
             int right = start*2+2;
@@ -39,14 +39,14 @@ namespace Algorithm
             return node;
         }
 
-        public Node CreateBSTFromSortedArray(int[] nums)         
+        public static Node CreateBSTFromSortedArray(int[] nums)         
         {
             return CreateBSTFromSortedArray(nums, 0, nums.Length-1);
         }
 
         //[EASY] 108. Convert Sorted Array to Binary Search Tree
         //https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
-        public Node CreateBSTFromSortedArray(int[] nums, int start, int end)         
+        public static Node CreateBSTFromSortedArray(int[] nums, int start, int end)         
         {
             if(start > end) return null;
             int mid = (start+end)/2;
@@ -57,7 +57,7 @@ namespace Algorithm
         }
 
         // 94. Binary Tree Inorder Traversal
-        public void InorderTraversalRecusrive(Node root, IList<int> l)
+        public static void InorderTraversalRecusrive(Node root, IList<int> l)
         {
             if(root==null) return;
             InorderTraversalRecusrive(root.left, l);
@@ -65,7 +65,7 @@ namespace Algorithm
             InorderTraversalRecusrive(root.right, l);
         }
 
-        public void InorderTraversalIterative(Node root)
+        public static void InorderTraversalIterative(Node root)
         {
             Stack<Node> s = new Stack<Node>();
             Console.Write("Inorder Traversal Iterative: ");
@@ -89,7 +89,7 @@ namespace Algorithm
 
 
         // 144. Binary Tree Preorder Traversal
-        public void PreorderTraversalRecusrive(Node root, IList<int> l)
+        public static void PreorderTraversalRecusrive(Node root, IList<int> l)
         {            
             if(root==null) return;
             l.Add(root.value); // print/add/verify your data here
@@ -97,7 +97,7 @@ namespace Algorithm
             PreorderTraversalRecusrive(root.right, l);
         }
 
-        public void PreorderTraversalIterative(Node root)
+        public static void PreorderTraversalIterative(Node root)
         {
             Stack<Node> s = new Stack<Node>();
             Console.Write("Preorder Traversal Iterative: ");
@@ -120,7 +120,7 @@ namespace Algorithm
         }
 
 
-        public void PostorderTraversalRecusrive(Node root, IList<int> l)
+        public static void PostorderTraversalRecusrive(Node root, IList<int> l)
         {
             if(root==null) return;
             PostorderTraversalRecusrive(root.left, l);
@@ -128,7 +128,7 @@ namespace Algorithm
             l.Add(root.value); // print/add/verify your data here
         }
 
-        public void PostorderTraversalIterative(Node root)
+        public static void PostorderTraversalIterative(Node root)
         {
             Stack<Node> s = new Stack<Node>();
             Console.Write("Postorder Traversal Iterative: ");
@@ -155,7 +155,7 @@ namespace Algorithm
         }
 
         //102. Binary Tree Level Order Traversal
-        public void LevelorderTraversalRecursive(Node root, int level, IList<IList<int>> ls)
+        public static void LevelorderTraversalRecursive(Node root, int level, IList<IList<int>> ls)
         {
             if(root==null) return;
             if(ls.Count == level) ls.Add(new List<int>());
@@ -167,7 +167,7 @@ namespace Algorithm
 
 
         //102. Binary Tree Level Order Traversal
-        public void LevelorderTraversalIterative(Node root, IList<IList<int>> ls)
+        public static void LevelorderTraversalIterative(Node root, IList<IList<int>> ls)
         {
             Queue<Node> q = new Queue<Node>();
             if(root!=null) q.Enqueue(root);
@@ -190,7 +190,7 @@ namespace Algorithm
         }
 
         // 700. Search in a Binary Searcsh Tree
-        public Node SearchBST(Node root, int value) {
+        public static Node SearchBST(Node root, int value) {
             if(root==null) { Console.WriteLine("SearchBST: "+ value + " not found!!"); return null; }
         
             if(root.value > value) return SearchBST(root.left, value);
@@ -201,7 +201,7 @@ namespace Algorithm
         }
 
         //617. Merge Two Binary Trees
-        public Node MergeTrees(Node t1, Node t2) {
+        public static Node MergeTrees(Node t1, Node t2) {
             if(t1==null && t2 == null ) return null;
             
             Node node = new Node(0);
@@ -216,7 +216,7 @@ namespace Algorithm
 
         // 101. Symmetric Tree
         // https://leetcode.com/problems/symmetric-tree/
-        public bool IsSymmetric(Node root) {
+        public static bool IsSymmetric(Node root) {
             if(root==null)  // no node
                 return true;
                     
@@ -226,7 +226,7 @@ namespace Algorithm
             return IsMirror(root.left, root.right);
         }
         
-        public bool IsMirror(Node left, Node right)
+        public static bool IsMirror(Node left, Node right)
         {
             if(left!=null && right != null)
             {
@@ -241,7 +241,7 @@ namespace Algorithm
         }
 
         // 104. Maximum Depth of Binary Tree
-        public int MaxDepth(Node root) {
+        public static int MaxDepth(Node root) {
             if(root==null) return 0;        
             if(root.left==null && root.right==null) return 1;        
             return Math.Max( MaxDepth(root.left), MaxDepth(root.right)) + 1;
@@ -249,13 +249,13 @@ namespace Algorithm
 
         // 230. Kth Smallest Element in a BST
         // solution 1a
-        public int KthSmallestInorderCompare(Node root, int k) {
+        public static int KthSmallestInorderCompare(Node root, int k) {
         int value = -1;
         InorderCompare(root, ref k, ref value);
         return value;
         }
         
-        public void InorderCompare(Node root, ref int k, ref int value)
+        public static void InorderCompare(Node root, ref int k, ref int value)
         {
             if(root==null) return;
             
@@ -272,10 +272,10 @@ namespace Algorithm
         
         // 230. Kth Smallest Element in a BST
         // solution 1b
-        public int KthSmallestInorderReturn(Node root, int k) 
+        public static int KthSmallestInorderReturn(Node root, int k) 
         {  return KthSmallestInorderReturn(root, ref k); }
         
-        public int KthSmallestInorderReturn(Node root, ref int k)
+        public static int KthSmallestInorderReturn(Node root, ref int k)
         {
             if(root==null) return -1;
             
@@ -289,7 +289,7 @@ namespace Algorithm
         
         // 230. Kth Smallest Element in a BST
         // solution 2 - iterative inorder traversal        
-        public int KthSmallestInorderIterative(Node root, int k) 
+        public static int KthSmallestInorderIterative(Node root, int k) 
         {
             Stack<Node> s = new Stack<Node>();
             Node node = root;
@@ -309,7 +309,7 @@ namespace Algorithm
         
         // 230. Kth Smallest Element in a BST
        // solution 3 - divide and conquer for valid BST & valid k only  
-        public int KthSmallestDivideConquer(Node root, int k) {
+        public static int KthSmallestDivideConquer(Node root, int k) {
             int count = CountNodes(root.left);
             if (k <= count) 
                 return KthSmallestDivideConquer(root.left, k);
@@ -319,7 +319,7 @@ namespace Algorithm
             return root.value;
         }
         
-        public int CountNodes(Node node) {
+        public static int CountNodes(Node node) {
             if (node == null) return 0;
             
             return 1 + CountNodes(node.left) + CountNodes(node.right);
@@ -333,19 +333,19 @@ namespace Algorithm
 // Both the left and right subtrees must also be binary search trees
 
     // solution 1
-    public bool IsValidBST1(Node root) {
+    public static bool IsValidBST1(Node root) {
         if (root == null) return true;    
         return IsValidBSTRecursive(root, long.MinValue, long.MaxValue);
 	}
         
-    public bool IsValidBSTRecursive(Node root, long low, long high) {
+    public static bool IsValidBSTRecursive(Node root, long low, long high) {
         if (root == null) return true;
         if (root.value <= low || root.value >= high) return false;
         return IsValidBSTRecursive(root.left, low, root.value) && IsValidBSTRecursive(root.right, root.value, high);
     }
     
     // solution 2
-    public bool IsValidBST2(Node root) {
+    public static bool IsValidBST2(Node root) {
         List<int> list = new List<int>();
         CreateInorderListRecursive(root, list);
         
@@ -356,7 +356,7 @@ namespace Algorithm
         return true;
 	}
 	
-    public void CreateInorderListRecursive(Node root, List<int> list)
+    public static void CreateInorderListRecursive(Node root, List<int> list)
     {
         if(root==null) return;
         
@@ -366,14 +366,14 @@ namespace Algorithm
     }
     
     // solution 3
-    public bool IsValidBST3(Node root) {
+    public static bool IsValidBST3(Node root) {
         bool valid = true;
         InorderCompareRecusrive(root, ref valid);
         return valid;
     }
 	
-    Node prev;
-    public void InorderCompareRecusrive(Node root, ref bool valid)
+    public static Node prev;
+    public static void InorderCompareRecusrive(Node root, ref bool valid)
     {
         if(root==null) return;
         
@@ -386,7 +386,7 @@ namespace Algorithm
     }
     
     // solution 4: stack/DFS/Inorder
-    public bool IsValidBST4(Node root) {
+    public static bool IsValidBST4(Node root) {
         if(root==null) return true;
         Stack<Node> s = new Stack<Node>();
         Node p = root, prev = null;
@@ -404,7 +404,7 @@ namespace Algorithm
     }
 
 	// solution 5: Iterative solution without stack and recusrive. O(N) time with O(1) space
-    public bool IsValidBST(Node root) {
+    public static bool IsValidBST(Node root) {
         if (root==null) return true;
         Node cur = root, prev=null, parent=null;
         bool res = true;
@@ -474,52 +474,52 @@ namespace Algorithm
         static void Main(string[] argv)
         {
             Tree tree = new Tree("tree");
-            tree.root = tree.CreateBTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
+            tree.root = Tree.CreateBTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
             tree.Print();
             
-            Console.WriteLine("is it valid binary search tree? v1:{0},v2:{1},v3:{2},v4:{3}, v5:{4}", tree.IsValidBST(tree.root), tree.IsValidBST1(tree.root), tree.IsValidBST2(tree.root), tree.IsValidBST3(tree.root), tree.IsValidBST4(tree.root));
+            Console.WriteLine("is it valid binary search tree? v1:{0},v2:{1},v3:{2},v4:{3}, v5:{4}", Tree.IsValidBST(tree.root), Tree.IsValidBST1(tree.root), Tree.IsValidBST2(tree.root), Tree.IsValidBST3(tree.root), Tree.IsValidBST4(tree.root));
             IList<int> l1 = new List<int>();            
-            tree.PreorderTraversalRecusrive(tree.root, l1);
+            Tree.PreorderTraversalRecusrive(tree.root, l1);
             PrintList("Preorder Traversal Recursive", l1 );
             IList<int> l2 = new List<int>();            
-            tree.InorderTraversalRecusrive(tree.root, l2);
+            Tree.InorderTraversalRecusrive(tree.root, l2);
             PrintList("Inorder Traversal Recursive", l2);
             IList<int> l3 = new List<int>();            
-            tree.PostorderTraversalRecusrive(tree.root, l3);
+            Tree.PostorderTraversalRecusrive(tree.root, l3);
             PrintList("Postorder Traversal Recursive", l3);
             IList<IList<int>> l4 = new List<IList<int>>();            
-            tree.LevelorderTraversalRecursive(tree.root, 0, l4);
+            Tree.LevelorderTraversalRecursive(tree.root, 0, l4);
             PrintList("Levelorder Traversal Recursive", l4);
 
-            tree.PreorderTraversalIterative(tree.root);
-            tree.InorderTraversalIterative(tree.root);
-            tree.PostorderTraversalIterative(tree.root);
+            Tree.PreorderTraversalIterative(tree.root);
+            Tree.InorderTraversalIterative(tree.root);
+            Tree.PostorderTraversalIterative(tree.root);
             IList<IList<int>> l5 = new List<IList<int>>();            
-            tree.LevelorderTraversalIterative(tree.root, l5);
+            Tree.LevelorderTraversalIterative(tree.root, l5);
             PrintList("Levelorder Traversal Iterative", l5);
-            Console.WriteLine("Max Depth: " + tree.MaxDepth(tree.root));
+            Console.WriteLine("Max Depth: " + Tree.MaxDepth(tree.root));
 
             Tree tree2 = new Tree("tree2");
-            tree2.root = tree2.CreateBSTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
+            tree2.root = Tree.CreateBSTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
             tree2.Print();
 
-            tree2.SearchBST(tree2.root, 7);
+            Tree.SearchBST(tree2.root, 7);
             
-            Console.WriteLine("is it valid binary search tree? v1:{0},v2:{1},v3:{2},v4:{3}, v5:{4}", tree2.IsValidBST(tree2.root), tree2.IsValidBST1(tree2.root), tree2.IsValidBST2(tree2.root), tree2.IsValidBST3(tree2.root), tree2.IsValidBST4(tree2.root));
+            Console.WriteLine("is it valid binary search tree? v1:{0},v2:{1},v3:{2},v4:{3}, v5:{4}", Tree.IsValidBST(tree2.root), Tree.IsValidBST1(tree2.root), Tree.IsValidBST2(tree2.root), Tree.IsValidBST3(tree2.root), Tree.IsValidBST4(tree2.root));
 
-            Console.WriteLine("Is {0} symmetric? {1}", tree2.name,  tree2.IsSymmetric(tree2.root));
-            Console.WriteLine("Node Count(s): " + tree2.CountNodes(tree2.root));
+            Console.WriteLine("Is {0} symmetric? {1}", tree2.name,  Tree.IsSymmetric(tree2.root));
+            Console.WriteLine("Node Count(s): " + Tree.CountNodes(tree2.root));
             Console.WriteLine("Kth Smallest Algorithm: ");
-            Console.WriteLine("InorderDivideConquer 5th smallest = " + tree2.KthSmallestDivideConquer(tree2.root, 5));
-            Console.WriteLine("InorderCompare 4th smallest = " + tree2.KthSmallestInorderCompare(tree2.root, 4));
-            Console.WriteLine("InorderReturn 3rd smallest = " + tree2.KthSmallestInorderReturn(tree2.root, 3)); 
-            Console.WriteLine("InorderIterative 2nd smallest = " + tree2.KthSmallestInorderIterative(tree2.root, 2));
+            Console.WriteLine("InorderDivideConquer 5th smallest = " + Tree.KthSmallestDivideConquer(tree2.root, 5));
+            Console.WriteLine("InorderCompare 4th smallest = " + Tree.KthSmallestInorderCompare(tree2.root, 4));
+            Console.WriteLine("InorderReturn 3rd smallest = " + Tree.KthSmallestInorderReturn(tree2.root, 3)); 
+            Console.WriteLine("InorderIterative 2nd smallest = " + Tree.KthSmallestInorderIterative(tree2.root, 2));
 
             Tree tree3 = new Tree("tree3");
-            tree3.root = tree3.CreateBTFromSortedArray(new int[] {1,2,2,3,4,4,3});
+            tree3.root = Tree.CreateBTFromSortedArray(new int[] {1,2,2,3,4,4,3});
             tree3.Print();            
-            Console.WriteLine("Is {0} symmetric? {1} ", tree3.name,  tree3.IsSymmetric(tree3.root));
-            Console.WriteLine("Node Count(s): " + tree3.CountNodes(tree3.root));
+            Console.WriteLine("Is {0} symmetric? {1} ", tree3.name,  Tree.IsSymmetric(tree3.root));
+            Console.WriteLine("Node Count(s): " + Tree.CountNodes(tree3.root));
         }
     }
 }
