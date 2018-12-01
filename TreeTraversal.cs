@@ -325,6 +325,119 @@ namespace Algorithm
             return 1 + CountNodes(node.left) + CountNodes(node.right);
         }
 
+        // 98. Validate Binary Search Tree
+// Given a binary tree, determine if it is a valid binary search tree (BST).
+// Assume a BST is defined as follows:
+// The left subtree of a node contains only nodes with keys less than the node's key.
+// The right subtree of a node contains only nodes with keys greater than the node's key.
+// Both the left and right subtrees must also be binary search trees
+
+    // solution 1
+    public bool IsValidBST1(Node root) {
+        if (root == null) return true;    
+        return IsValidBSTRecursive(root, long.MinValue, long.MaxValue);
+	}
+        
+    public bool IsValidBSTRecursive(Node root, long low, long high) {
+        if (root == null) return true;
+        if (root.value <= low || root.value >= high) return false;
+        return IsValidBSTRecursive(root.left, low, root.value) && IsValidBSTRecursive(root.right, root.value, high);
+    }
+    
+    // solution 2
+    public bool IsValidBST2(Node root) {
+        List<int> list = new List<int>();
+        CreateInorderListRecursive(root, list);
+        
+        int[] nums = list.ToArray();        
+        for(int i=0;i<nums.Length-1;i++)
+            if(nums[i] >= nums[i+1]) return false;
+        
+        return true;
+	}
+	
+    public void CreateInorderListRecursive(Node root, List<int> list)
+    {
+        if(root==null) return;
+        
+        CreateInorderListRecursive(root.left, list);
+        list.Add(root.value);
+        CreateInorderListRecursive(root.right, list);
+    }
+    
+    // solution 3
+    public bool IsValidBST3(Node root) {
+        bool valid = true;
+        InorderCompareRecusrive(root, ref valid);
+        return valid;
+    }
+	
+    Node prev;
+    public void InorderCompareRecusrive(Node root, ref bool valid)
+    {
+        if(root==null) return;
+        
+        InorderCompareRecusrive(root.left, ref valid);
+        
+		if(prev != null && prev.value >= root.value ) { valid=false; return; }
+		prev = root;            
+        
+        InorderCompareRecusrive(root.right, ref valid);
+    }
+    
+    // solution 4: stack/DFS/Inorder
+    public bool IsValidBST4(Node root) {
+        if(root==null) return true;
+        Stack<Node> s = new Stack<Node>();
+        Node p = root, prev = null;
+        while (p != null || s.Count > 0) {
+            while (p != null) {
+                s.Push(p);
+                p = p.left;
+            }
+            Node t = s.Pop();
+            if (prev != null && prev.value >= t.value) return false;
+            prev = t;
+            p = t.right;
+        }
+        return true;
+    }
+
+	// solution 5: Iterative solution without stack and recusrive. O(N) time with O(1) space
+    public bool IsValidBST(Node root) {
+        if (root==null) return true;
+        Node cur = root, prev=null, parent=null;
+        bool res = true;
+        while (cur!=null) {
+            if (cur.left==null) {
+                if (parent!=null && parent.value >= cur.value) { res = false; }
+                parent = cur;
+                cur = cur.right;
+            } 
+            else 
+            {
+                prev = cur.left;
+                while (prev.right!=null && prev.right != cur) prev = prev.right;
+                
+                if (prev.right==null) {
+                    prev.right = cur;
+                    cur = cur.left;
+                } 
+                else 
+                {
+                    prev.right = null;
+                    if (parent.value >= cur.value) { res = false; }
+                    parent = cur;
+                    cur = cur.right;
+                }
+            }
+        }
+        
+        return res;
+    }
+
+
+
         public void Print() { Print(root); }
 
         private void Print(Node root)
@@ -364,6 +477,7 @@ namespace Algorithm
             tree.root = tree.CreateBTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
             tree.Print();
             
+            Console.WriteLine("is it valid binary search tree? v1:{0},v2:{1},v3:{2},v4:{3}, v5:{4}", tree.IsValidBST(tree.root), tree.IsValidBST1(tree.root), tree.IsValidBST2(tree.root), tree.IsValidBST3(tree.root), tree.IsValidBST4(tree.root));
             IList<int> l1 = new List<int>();            
             tree.PreorderTraversalRecusrive(tree.root, l1);
             PrintList("Preorder Traversal Recursive", l1 );
@@ -390,6 +504,9 @@ namespace Algorithm
             tree2.Print();
 
             tree2.SearchBST(tree2.root, 7);
+            
+            Console.WriteLine("is it valid binary search tree? v1:{0},v2:{1},v3:{2},v4:{3}, v5:{4}", tree2.IsValidBST(tree2.root), tree2.IsValidBST1(tree2.root), tree2.IsValidBST2(tree2.root), tree2.IsValidBST3(tree2.root), tree2.IsValidBST4(tree2.root));
+
             Console.WriteLine("Is {0} symmetric? {1}", tree2.name,  tree2.IsSymmetric(tree2.root));
             Console.WriteLine("Node Count(s): " + tree2.CountNodes(tree2.root));
             Console.WriteLine("Kth Smallest Algorithm: ");
