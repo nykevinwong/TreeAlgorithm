@@ -21,14 +21,14 @@ namespace Algorithm
         {
         }
 
-        public Node CreateTreeFromSortedArray(int[] nums, int start=0)
+        public Node CreateBTFromSortedArray(int[] nums, int start=0)
         {
             int left = start*2+1;
             int right = start*2+2;
             Node node = new Node(nums[start]);
 
-            if(left < nums.Length) node.left = CreateTreeFromSortedArray(nums, left);
-            if(right < nums.Length) node.right = CreateTreeFromSortedArray(nums, right);
+            if(left < nums.Length) node.left = CreateBTFromSortedArray(nums, left);
+            if(right < nums.Length) node.right = CreateBTFromSortedArray(nums, right);
             
             return node;
         }
@@ -341,7 +341,7 @@ namespace Algorithm
         static void Main(string[] argv)
         {
             Tree tree = new Tree();
-            tree.root = tree.CreateTreeFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
+            tree.root = tree.CreateBTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
             tree.Print();
             
             IList<int> l1 = new List<int>();            
@@ -379,7 +379,7 @@ namespace Algorithm
             Console.WriteLine("InorderIterative 2nd smallest = " + tree2.KthSmallestInorderIterative(tree2.root, 2));
 
             Tree tree3 = new Tree();
-            tree3.root = tree3.CreateTreeFromSortedArray(new int[] {1,2,2,3,4,4,3});
+            tree3.root = tree3.CreateBTFromSortedArray(new int[] {1,2,2,3,4,4,3});
             tree3.Print();            
             Console.WriteLine("Is tree2 symmetric? " + tree3.IsSymmetric(tree3.root));
             Console.WriteLine("Node Count(s): " + tree3.CountNodes(tree3.root));
