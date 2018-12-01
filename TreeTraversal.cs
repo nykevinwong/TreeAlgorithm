@@ -38,6 +38,8 @@ namespace Algorithm
             return CreateBSTFromSortedArray(nums, 0, nums.Length-1);
         }
 
+        //[EASY] 108. Convert Sorted Array to Binary Search Tree
+        //https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
         public Node CreateBSTFromSortedArray(int[] nums, int start, int end)         
         {
             if(start > end) return null;
@@ -48,60 +50,13 @@ namespace Algorithm
             return node;
         }
 
-
-        public void LevelorderTraversalRecursive(Node root, int level, IList<IList<int>> ls)
-        {
-            if(root==null) return;
-            if(ls.Count == level) ls.Add(new List<int>());
-
-            ls[level].Add(root.value); // print/add/verify your data here.
-            LevelorderTraversalRecursive(root.left, level+1, ls);
-            LevelorderTraversalRecursive(root.right, level+1, ls);
-        }
-
+        // 94. Binary Tree Inorder Traversal
         public void InorderTraversalRecusrive(Node root, IList<int> l)
         {
             if(root==null) return;
             InorderTraversalRecusrive(root.left, l);
             l.Add(root.value); // print/add/verify your data here
             InorderTraversalRecusrive(root.right, l);
-        }
-
-        public void PreorderTraversalRecusrive(Node root, IList<int> l)
-        {            
-            if(root==null) return;
-            l.Add(root.value); // print/add/verify your data here
-            PreorderTraversalRecusrive(root.left, l);
-            PreorderTraversalRecusrive(root.right, l);
-        }
-
-        public void PostorderTraversalRecusrive(Node root, IList<int> l)
-        {
-            if(root==null) return;
-            PostorderTraversalRecusrive(root.left, l);
-            PostorderTraversalRecusrive(root.right, l);
-            l.Add(root.value); // print/add/verify your data here
-        }
-        public void PreorderTraversalIterative(Node root)
-        {
-            Stack<Node> s = new Stack<Node>();
-            Console.Write("Preorder Traversal Iterative: ");
-
-            while(root!=null || s.Count > 0)
-            {
-                if(root!=null)
-                {
-                    s.Push(root);
-                    Console.Write(root.value + " ");
-                    root = root.left;
-                }
-                else // root is null
-                {
-                    root = s.Pop();
-                    root = root.right;
-                }
-            }
-            Console.WriteLine();
         }
 
         public void InorderTraversalIterative(Node root)
@@ -124,6 +79,47 @@ namespace Algorithm
                 }
             }
             Console.WriteLine();
+        }
+
+
+        // 144. Binary Tree Preorder Traversal
+        public void PreorderTraversalRecusrive(Node root, IList<int> l)
+        {            
+            if(root==null) return;
+            l.Add(root.value); // print/add/verify your data here
+            PreorderTraversalRecusrive(root.left, l);
+            PreorderTraversalRecusrive(root.right, l);
+        }
+
+        public void PreorderTraversalIterative(Node root)
+        {
+            Stack<Node> s = new Stack<Node>();
+            Console.Write("Preorder Traversal Iterative: ");
+
+            while(root!=null || s.Count > 0)
+            {
+                if(root!=null)
+                {
+                    s.Push(root);
+                    Console.Write(root.value + " ");
+                    root = root.left;
+                }
+                else // root is null
+                {
+                    root = s.Pop();
+                    root = root.right;
+                }
+            }
+            Console.WriteLine();
+        }
+
+
+        public void PostorderTraversalRecusrive(Node root, IList<int> l)
+        {
+            if(root==null) return;
+            PostorderTraversalRecusrive(root.left, l);
+            PostorderTraversalRecusrive(root.right, l);
+            l.Add(root.value); // print/add/verify your data here
         }
 
         public void PostorderTraversalIterative(Node root)
@@ -152,6 +148,19 @@ namespace Algorithm
             Console.WriteLine();
         }
 
+        //102. Binary Tree Level Order Traversal
+        public void LevelorderTraversalRecursive(Node root, int level, IList<IList<int>> ls)
+        {
+            if(root==null) return;
+            if(ls.Count == level) ls.Add(new List<int>());
+
+            ls[level].Add(root.value); // print/add/verify your data here.
+            LevelorderTraversalRecursive(root.left, level+1, ls);
+            LevelorderTraversalRecursive(root.right, level+1, ls);
+        }
+
+
+        //102. Binary Tree Level Order Traversal
         public void LevelorderTraversalIterative(Node root, IList<IList<int>> ls)
         {
             Queue<Node> q = new Queue<Node>();
@@ -199,6 +208,8 @@ namespace Algorithm
             return node;
         }
 
+        // 101. Symmetric Tree
+        // https://leetcode.com/problems/symmetric-tree/
         public bool IsSymmetric(Node root) {
             if(root==null)  // no node
                 return true;
@@ -223,13 +234,14 @@ namespace Algorithm
             return false;
         }
 
-// 104. Maximum Depth of Binary Tree
+        // 104. Maximum Depth of Binary Tree
         public int MaxDepth(Node root) {
             if(root==null) return 0;        
             if(root.left==null && root.right==null) return 1;        
             return Math.Max( MaxDepth(root.left), MaxDepth(root.right)) + 1;
         }
 
+        // 230. Kth Smallest Element in a BST
         // solution 1a
         public int KthSmallestInorderCompare(Node root, int k) {
         int value = -1;
@@ -252,6 +264,7 @@ namespace Algorithm
             
         }
         
+        // 230. Kth Smallest Element in a BST
         // solution 1b
         public int KthSmallestInorderReturn(Node root, int k) 
         {  return KthSmallestInorderReturn(root, ref k); }
@@ -268,8 +281,8 @@ namespace Algorithm
             return KthSmallestInorderReturn(root.right, ref k);        
         }
         
-        // solution 2 - iterative inorder traversal
-        
+        // 230. Kth Smallest Element in a BST
+        // solution 2 - iterative inorder traversal        
         public int KthSmallestInorderIterative(Node root, int k) 
         {
             Stack<Node> s = new Stack<Node>();
@@ -288,7 +301,8 @@ namespace Algorithm
             return -1;
         }
         
-        // solution 3 - divide and conquer for valid BST & valid k only  
+        // 230. Kth Smallest Element in a BST
+       // solution 3 - divide and conquer for valid BST & valid k only  
         public int KthSmallestDivideConquer(Node root, int k) {
             int count = CountNodes(root.left);
             if (k <= count) 
