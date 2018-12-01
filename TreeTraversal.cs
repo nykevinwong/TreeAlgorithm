@@ -14,6 +14,18 @@ namespace Algorithm
         }
     }
 
+    public class Node2
+    {
+        public Node2 left;
+        public Node2 right;
+        public Node2 next;
+        public int value;
+        public Node2(int value)
+        {
+            this.value = value;
+        }
+    }
+
     public class Tree
     {
         public Node root;
@@ -436,7 +448,62 @@ namespace Algorithm
         return res;
     }
 
+// 116. Populating Next Right Pointers in Each Node [**PREFETC BINARY TREE]
+// Given the following perfect binary tree. after calling your function, the tree should look like:
+//      1				    1 -> NULL
+//     /  \				   /  \
+//    2    3			  2 -> 3 -> NULL
+//   / \  / \			 / \  / \
+//  4  5  6  7			4->5->6->7 -> NULL	
 
+// solution 1: recursive
+    public static void PopulateNextRightPointer(Node2 root) {
+        if(root==null) return;
+        
+        if(root.left!=null) root.left.next = root.right;        
+        if(root.right!=null && root.next != null) root.right.next = root.next.left;        
+        PopulateNextRightPointer(root.left);
+        PopulateNextRightPointer(root.right);        
+    }
+
+	// solution 2[Java]: queue level-order traversal
+    public void PopulateNextRightPointer2(Node2 root) {
+        if(root==null) return;
+        Queue<Node2> q = new Queue<Node2>();
+        
+        q.Enqueue(root);
+        
+        while(q.Count > 0)
+        {
+            int size = q.Count;
+            for(int i=0;i< size; i++)
+            {
+                Node2 node = q.Dequeue();               
+                
+                if(node.left!=null) node.left.next = node.right;
+                if(node.right!=null && node.next !=null) node.right.next = node.next.left;
+                    
+                if(node.left!=null) q.Enqueue(node.left);
+                if(node.right!=null) q.Enqueue(node.right);
+            }
+        }
+                
+    }
+
+	// solution 3: optimal O(1) space solution
+	public void PopulateNextRightPointer3(Node2 root) {
+        if (root==null) return;
+        Node2 start = root, node = null;
+        while (start.left!=null) {
+            node = start;
+            while (node!=null) {
+                node.left.next = node.right;
+                if (node.next!= null) node.right.next = node.next.left;
+                node = node.next;
+            }
+            start = start.left;
+        }                
+    }
 
         public void Print() { Print(root); }
 
