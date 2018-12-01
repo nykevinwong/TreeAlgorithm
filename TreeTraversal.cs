@@ -17,12 +17,11 @@ namespace Algorithm
     public class Tree
     {
         public Node root;
-        public Tree(int[] nums)
+        public Tree()
         {
-            this.root = this.CreateTreeFromSortedArray(nums, 0);
         }
 
-        public Node CreateTreeFromSortedArray(int[] nums, int start)
+        public Node CreateTreeFromSortedArray(int[] nums, int start=0)
         {
             int left = start*2+1;
             int right = start*2+2;
@@ -33,6 +32,22 @@ namespace Algorithm
             
             return node;
         }
+
+        public Node CreateBSTFromSortedArray(int[] nums)         
+        {
+            return CreateBSTFromSortedArray(nums, 0, nums.Length-1);
+        }
+
+        public Node CreateBSTFromSortedArray(int[] nums, int start, int end)         
+        {
+            if(start > end) return null;
+            int mid = (start+end)/2;
+            Node node = new Node(nums[mid]);
+            node.left = CreateBSTFromSortedArray(nums, start, mid-1);
+            node.right = CreateBSTFromSortedArray(nums, mid+1, end);
+            return node;
+        }
+
 
         public void LevelorderTraversalRecursive(Node root, int level, IList<IList<int>> ls)
         {
@@ -325,7 +340,8 @@ namespace Algorithm
 
         static void Main(string[] argv)
         {
-            Tree tree = new Tree( new int[] {1,2,3,4,5,6,7,8,9});
+            Tree tree = new Tree();
+            tree.root = tree.CreateTreeFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
             tree.Print();
             
             IList<int> l1 = new List<int>();            
@@ -348,19 +364,25 @@ namespace Algorithm
             tree.LevelorderTraversalIterative(tree.root, l5);
             PrintList("Levelorder Traversal Iterative", l5);
             Console.WriteLine("Max Depth: " + tree.MaxDepth(tree.root));
-            tree.SearchBST(tree.root, 7);
-            Console.WriteLine("Is tree1 symmetric? " + tree.IsSymmetric(tree.root));
-            Console.WriteLine("Node Count(s): " + tree.CountNodes(tree.root));
-            Console.WriteLine("Kth Smallest Algorithm: ");
-            Console.WriteLine("InorderDivideConquer 5th smallest = " + tree.KthSmallestDivideConquer(tree.root, 5));
-            Console.WriteLine("InorderCompare 4th smallest = " + tree.KthSmallestInorderCompare(tree.root, 4));
-            Console.WriteLine("InorderReturn 3rd smallest = " + tree.KthSmallestInorderReturn(tree.root, 3)); 
-            Console.WriteLine("InorderIterative 2nd smallest = " + tree.KthSmallestInorderIterative(tree.root, 2));
 
-            Tree tree2 = new Tree( new int[] {1,2,2,3,4,4,3});
-            tree2.Print();            
-            Console.WriteLine("Is tree2 symmetric? " + tree2.IsSymmetric(tree2.root));
+            Tree tree2 = new Tree();
+            tree2.root = tree2.CreateBSTFromSortedArray(new int[] {1,2,3,4,5,6,7,8,9});
+            tree2.Print();
+
+            tree2.SearchBST(tree2.root, 7);
+            Console.WriteLine("Is tree1 symmetric? " + tree2.IsSymmetric(tree2.root));
             Console.WriteLine("Node Count(s): " + tree2.CountNodes(tree2.root));
+            Console.WriteLine("Kth Smallest Algorithm: ");
+            Console.WriteLine("InorderDivideConquer 5th smallest = " + tree2.KthSmallestDivideConquer(tree2.root, 5));
+            Console.WriteLine("InorderCompare 4th smallest = " + tree2.KthSmallestInorderCompare(tree2.root, 4));
+            Console.WriteLine("InorderReturn 3rd smallest = " + tree2.KthSmallestInorderReturn(tree2.root, 3)); 
+            Console.WriteLine("InorderIterative 2nd smallest = " + tree2.KthSmallestInorderIterative(tree2.root, 2));
+
+            Tree tree3 = new Tree();
+            tree3.root = tree3.CreateTreeFromSortedArray(new int[] {1,2,2,3,4,4,3});
+            tree3.Print();            
+            Console.WriteLine("Is tree2 symmetric? " + tree3.IsSymmetric(tree3.root));
+            Console.WriteLine("Node Count(s): " + tree3.CountNodes(tree3.root));
         }
     }
 }
